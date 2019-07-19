@@ -18,16 +18,15 @@ import android.view.*;
 import retrofit2.*;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     ListView list;
     TextView textt;
 
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState)    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         list=(ListView) findViewById(R.id.listt);
@@ -43,14 +42,13 @@ public class MainActivity extends AppCompatActivity  {
         call.enqueue(new Callback<List<projects>>() {
             @Override
             public void onResponse(Call<List<projects>> call, Response<List<projects>> response) {
-                try {
-                    List<projects> contributors = call.execute().body();
+
+                    List<projects> contributors = response.body();
                     for (projects contributor : contributors) {
                         String wynik="";
                         wynik+=contributor.name + " (" + String.valueOf(contributor.getId()) + ")" + contributor.getDescirption();
                         textt.setText(wynik);   }
-                }catch(IOException e)
-                {}
+
 
             }
 
