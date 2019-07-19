@@ -1,21 +1,24 @@
 package com.example.mantis_displaying;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.*;
+
 import retrofit2.http.GET;
-
-public interface api<Get_all_projects> {
-    Retrofit retrofit=new Retrofit.Builder()
-    .baseUrl("https://mantis.mobilebox.pl/")
-     .build();
-
-
-    api service=retrofit.create(MainActivity.class);
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 
-    @GET("api/rest/projects")
-    Call<projects>getList(@Header("Authorization: Xdoyk8Pi3lmLuKjpAF6bk6tDHeMfXk36")String authorization );
+public interface api {
+
+
+    @Headers("Authorization:Xdoyk8Pi3lmLuKjpAF6bk6tDHeMfXk36 ")
+    @GET("/rest/issues?page_size=3&page=1")
+    Call<List<projects>> getData();
+
 
 
 }
