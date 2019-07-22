@@ -1,5 +1,6 @@
 package com.example.mantis_displaying;
 
+import com.example.mantis_displaying.Welcome.Welcome;
 import com.example.mantis_displaying.example.Example;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface api {
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
     @GET("/api/rest/issues?page_size=10&page=1")
-    Call<List<Example>> getData();
+    Call<List<Welcome>> getData();
 
 
 

@@ -6,8 +6,11 @@ import java.util.*;
 import android.os.Bundle;
 import android.widget.*;
 
+import com.example.mantis_displaying.RetrofitClientInstance;
 import com.example.mantis_displaying.example.Example;
-import com.example.mantis_displaying.example.Field;
+import com.example.mantis_displaying.issues;
+import com.example.mantis_displaying.Welcome.*;
+import android.view.View;
 
 import kotlin.jvm.Throws;
 import retrofit2.Call;
@@ -37,28 +40,28 @@ public class MainActivity extends AppCompatActivity {
          .build();
         api api=retrofit.create(api.class);
 
-        Call<List<Example>> call = api.getData();
-            call.enqueue(new Callback<List<Example>>() {
+        Call<List<Welcome>> call = api.getData();
+            call.enqueue(new Callback<List<Welcome>>() {
             @Override
-            public void onResponse(Call<List< Example>> call, Response<List<Example>> response) {
+            public void onResponse(Call<List<Welcome>> call, Response<List<Welcome>> response) {
 
-                   if (!response.isSuccessful()) {
-                         textt.setText("Code: " + response.code());
-                        return;
-            }
+               //    if (!response.isSuccessful()) {
+               //          textt.setText("Code: " + response.code());
+              //          return;
+         //   }
 
-                List<Example> posts = response.body();
-               for (Example project : posts) {
+                List<Welcome> posts = response.body();
+               for (Welcome project :posts) {
                     String content = "";
-                    content += "ID: " + project.getId() + "\n";
-                    content += "Title: " + project.getSummary() + "\n";
-                    content += "Description: " + project.getDescription() + "\n";
+                    content += "ID: ";
+                    content += "Title: ;"; //+ project.getSummary() + "\n";
+                    content += "Description: "; //+ project.getDescription() + "\n";
                     textt.append(content);
                   }
             }
 
             @Override
-            public void onFailure(Call<List<Example>> call, Throwable t) {
+            public void onFailure(Call<List<Welcome>> call, Throwable t) {
                     textt.setText(t.getMessage());
             }
         });
