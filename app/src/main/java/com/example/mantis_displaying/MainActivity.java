@@ -45,18 +45,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Welcome>> call, Response<List<Welcome>> response) {
 
-               //    if (!response.isSuccessful()) {
-               //          textt.setText("Code: " + response.code());
-              //          return;
-         //   }
+                  if (!response.isSuccessful()) {
+                      textt.setText("Code: " + response.code());
+                      return;
+          }
 
                 List<Welcome> posts = response.body();
-               for (Welcome project :posts) {
+
+                for (Welcome project :response.body()) {
                     String content = "";
-                    content += "ID: ";
-                    content += "Title: ;"; //+ project.getSummary() + "\n";
-                    content += "Description: "; //+ project.getDescription() + "\n";
+                    content += "ID: "+posts.get(1).getIssues().get(1).getID()+"\n";
+                    content += "Title: ;"+posts.get(1).getIssues().get(1).getSummary()+"\n";
+                    content += "Description: "+posts.get(1).getIssues().get(1).getDescription()+"\n";
                     textt.append(content);
+
                   }
             }
 

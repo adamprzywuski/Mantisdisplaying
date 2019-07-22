@@ -2,7 +2,7 @@ package com.example.mantis_displaying.Welcome;
 import java.util.*;
 
 public class Issue {
-    private long id;
+    private int id;
     private String summary;
     private String description;
     private Category project;
@@ -28,8 +28,8 @@ public class Issue {
     private String osBuild;
     private Attachment[] attachments;
 
-    public long getID() { return id; }
-    public void setID(long value) { this.id = value; }
+    public int getID() { return id; }
+    public void setID(int value) { this.id = value; }
 
     public String getSummary() { return summary; }
     public void setSummary(String value) { this.summary = value; }

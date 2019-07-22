@@ -1,5 +1,6 @@
 package com.example.mantis_displaying;
 
+import com.example.mantis_displaying.Welcome.Issue;
 import com.example.mantis_displaying.Welcome.Welcome;
 import com.example.mantis_displaying.example.Example;
 
