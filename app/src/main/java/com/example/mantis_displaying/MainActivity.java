@@ -40,30 +40,30 @@ public class MainActivity extends AppCompatActivity {
          .build();
         api api=retrofit.create(api.class);
 
-        Call<List<Welcome>> call = api.getData();
-            call.enqueue(new Callback<List<Welcome>>() {
+        Call<List<win>> call = api.getData();
+            call.enqueue(new Callback<List<win>>() {
             @Override
-            public void onResponse(Call<List<Welcome>> call, Response<List<Welcome>> response) {
+            public void onResponse(Call<List<win>> call, Response<List<win>> response) {
 
                   if (!response.isSuccessful()) {
                       textt.setText("Code: " + response.code());
                       return;
           }
+                //must have
+                List<win> posts = response.body();
 
-                List<Welcome> posts = response.body();
-
-                for (Welcome project :response.body()) {
+                for (win project :posts) {
                     String content = "";
-                    content += "ID: "+posts.get(1).getIssues().get(1).getID()+"\n";
-                    content += "Title: ;"+posts.get(1).getIssues().get(1).getSummary()+"\n";
-                    content += "Description: "+posts.get(1).getIssues().get(1).getDescription()+"\n";
+              //      content += "ID: "+posts.get(1).getIssues().get(1).getID()+"\n";
+              //      content += "Title: ;"+posts.get(1).getIssues().get(1).getSummary()+"\n";
+              //      content += "Description: "+posts.get(1).getIssues().get(1).getDescription()+"\n";
                     textt.append(content);
 
                   }
             }
 
             @Override
-            public void onFailure(Call<List<Welcome>> call, Throwable t) {
+            public void onFailure(Call<List<win>> call, Throwable t) {
                     textt.setText(t.getMessage());
             }
         });

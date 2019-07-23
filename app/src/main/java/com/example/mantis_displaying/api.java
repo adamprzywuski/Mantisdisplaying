@@ -22,7 +22,7 @@ public interface api {
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
     @GET("/api/rest/issues?page_size=10&page=1")
-    Call<List<Welcome>> getData();
+    Call<List<win>> getData();
 
 
 

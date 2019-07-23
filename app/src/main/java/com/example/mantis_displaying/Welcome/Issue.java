@@ -10,7 +10,6 @@ public class Issue {
     private Category reporter;
     private Priority status;
     private Priority resolution;
-    private Priority viewState;
     private Priority priority;
     private Priority severity;
     private Priority reproducibility;
@@ -52,8 +51,6 @@ public class Issue {
     public Priority getResolution() { return resolution; }
     public void setResolution(Priority value) { this.resolution = value; }
 
-    public Priority getViewState() { return viewState; }
-    public void setViewState(Priority value) { this.viewState = value; }
 
     public Priority getPriority() { return priority; }
     public void setPriority(Priority value) { this.priority = value; }
