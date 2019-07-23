@@ -1,18 +1,13 @@
 package com.example.mantis_displaying;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.util.*;
 import android.os.Bundle;
 import android.widget.*;
+import java.lang.String;
 
-import com.example.mantis_displaying.RetrofitClientInstance;
-import com.example.mantis_displaying.example.Example;
-import com.example.mantis_displaying.issues;
-import com.example.mantis_displaying.Welcome.*;
-import android.view.View;
+import java.util.ArrayList;
 
-import kotlin.jvm.Throws;
 import retrofit2.Call;
 import  retrofit2.Callback;
 import retrofit2.Response;
@@ -21,9 +16,14 @@ import retrofit2.*;
 
 
 public class MainActivity extends AppCompatActivity {
-
+//creating variables to layout
     ListView list;
     TextView textt;
+    private ArrayAdapter<String> adapter ;
+    String countryList[] = {"India \n i tak sobie pisze dalej", "China", "australia", "Portugle", "America", "NewZealand"};
+
+    ArrayList<String> buffor=new ArrayList<String>();
+
 
 
 
@@ -31,42 +31,58 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        list=(ListView) findViewById(R.id.listt);
-        textt=(TextView) findViewById(R.id.textView2);
 
+        //initiliaze variables to layout
+        list=(ListView) findViewById(R.id.listt);
+        textt=findViewById(R.id.textView);
+        textt.setText("");
         Retrofit retrofit=new Retrofit.Builder()
         .baseUrl(RetrofitClientInstance.API_URL)
          .addConverterFactory(GsonConverterFactory.create())
          .build();
         api api=retrofit.create(api.class);
 
-        Call<List<win>> call = api.getData();
-            call.enqueue(new Callback<List<win>>() {
+        Call<Issues> call = api.getData();
+            call.enqueue(new Callback<Issues>() {
             @Override
-            public void onResponse(Call<List<win>> call, Response<List<win>> response) {
+            public void onResponse(Call<Issues> call, Response<Issues> response) {
 
                   if (!response.isSuccessful()) {
                       textt.setText("Code: " + response.code());
                       return;
           }
-                //must have
-                List<win> posts = response.body();
 
-                for (win project :posts) {
-                    String content = "";
-              //      content += "ID: "+posts.get(1).getIssues().get(1).getID()+"\n";
-              //      content += "Title: ;"+posts.get(1).getIssues().get(1).getSummary()+"\n";
-              //      content += "Description: "+posts.get(1).getIssues().get(1).getDescription()+"\n";
-                    textt.append(content);
+                //absorbing JSON as object my class
+                    Issues posts=response.body();
+                  //creating a cointener which will be displaying the data
+                        int i=0;
+                        for(date project:posts.getIssues())
+                        {
+                            String storage="";
+                            storage+="ID: "+Integer.toString(project.id)+"\n";
+                            storage+="Summary: "+project.summary+"\n";
+                            storage+="Descpription: "+project.description+"\n"+"\n";
+                            textt.setText(textt.getText()+storage);
+                            buffor.add(storage);
+                          //  exe[i]=storage;
+                        i++;
+                        }
+              //   adapter=new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,countryList);
+                list.setAdapter(adapter);
 
-                  }
+
+
             }
 
             @Override
-            public void onFailure(Call<List<win>> call, Throwable t) {
-                    textt.setText(t.getMessage());
+            public void onFailure(Call<Issues> call, Throwable t) {
+                   textt.setText("Error"+t.getMessage());
             }
         });
+
+
+     //   adapter = new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,exe);
+
 
 
 
