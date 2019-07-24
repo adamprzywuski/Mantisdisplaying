@@ -1,7 +1,8 @@
 package com.example.mantis_displaying;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.widget.ListView;
+import android.widget.*;
 import android.os.Bundle;
 import android.widget.*;
 import java.lang.String;
@@ -21,9 +22,14 @@ public class MainActivity extends AppCompatActivity {
     TextView textt;
     private ArrayAdapter<String> adapter ;
     String countryList[] = {"India \n i tak sobie pisze dalej", "China", "australia", "Portugle", "America", "NewZealand"};
-
+    String bufor[]=new String[10];
     ArrayList<String> buffor=new ArrayList<String>();
 
+    private void settingAdapter(ArrayList<String> k)
+    {
+        list.setAdapter(new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,k));
+
+    }
 
 
 
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         //initiliaze variables to layout
         list=(ListView) findViewById(R.id.listt);
-        textt=findViewById(R.id.textView);
+        textt=findViewById(R.id.textView2);
         textt.setText("");
         Retrofit retrofit=new Retrofit.Builder()
         .baseUrl(RetrofitClientInstance.API_URL)
@@ -58,17 +64,19 @@ public class MainActivity extends AppCompatActivity {
                         int i=0;
                         for(date project:posts.getIssues())
                         {
+
                             String storage="";
-                            storage+="ID: "+Integer.toString(project.id)+"\n";
+                            storage+=" ID: "+Integer.toString(project.id)+"\n";
                             storage+="Summary: "+project.summary+"\n";
                             storage+="Descpription: "+project.description+"\n"+"\n";
-                            textt.setText(textt.getText()+storage);
+
+                            bufor[i]=storage;
+                       //     textt.setText(textt.getText()+storage);
                             buffor.add(storage);
-                          //  exe[i]=storage;
-                        i++;
+                            i++;
                         }
-              //   adapter=new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,countryList);
-                list.setAdapter(adapter);
+                            settingAdapter(buffor);
+
 
 
 
@@ -79,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                    textt.setText("Error"+t.getMessage());
             }
         });
+       //     textt.setText(bufor[1]);
 
-
-     //   adapter = new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,exe);
-
+   //  adapter = new ArrayAdapter<String>(this,R.layout.listexample,R.id.Row,bufor);
+     //   list.setAdapter(adapter);
 
 
 
