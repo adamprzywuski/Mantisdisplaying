@@ -7,19 +7,27 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 
 public interface api {
 
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
-    @GET("/api/rest/issues?page_size=10&page=1")
+    @GET("/api/rest/issues?page_size=50&page=1")
     Call<Issues> getData();
 
 
  //   @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
   //  @GET("/api/rest/issues?page_size=10&page=1")
    // Call<win> getAllIssues();
+
+
+ //   @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
+  // @POST("/api/rest/issues/:issue_id/notes")
+
+
 
 
 
