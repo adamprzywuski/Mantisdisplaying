@@ -22,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Main2Activity extends AppCompatActivity {
+    //creating variables for date
     datacollector ds=new datacollector();
     ArrayList<String> buffor = new ArrayList<String>();
     ArrayList<String> titles=new ArrayList<>();
@@ -29,13 +30,13 @@ public class Main2Activity extends AppCompatActivity {
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
     TextView title,description;
-
+//creating variebles for layout
     EditText write;
     int position;
     ImageButton btn;
     ListView list2;
     sending send=new sending();
-
+//function which put data into the ListView
     private void settingAdapter2(ArrayList<ArrayList<String>>k,ListView we,int position)
     {
         ArrayList<String> qwe= k.get(position);
@@ -46,6 +47,8 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        //getting date from previously activities and initiliaze variables
         Gson gson = new Gson();
         datacollector ob = gson.fromJson(getIntent().getStringExtra("4"), datacollector.class);
         buffor=ob.buffor;
@@ -54,6 +57,7 @@ public class Main2Activity extends AppCompatActivity {
         position=ob.positions;
         comments=ob.comments;
         ID=ob.ID;
+
         //initialize the layout variable
         Button clickButton = (Button) findViewById(R.id.back);
         title=findViewById(R.id.Title);
@@ -64,14 +68,15 @@ public class Main2Activity extends AppCompatActivity {
 
         //displaying the info in the specyfic places
         title.setText(titles.get(position));
-
         description.setText(descprit.get(position));
         settingAdapter2(comments,list2,position);
 
+        //when button to accept messeges will be click
         btn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                //Do stuff here
+                //Getting data from the EditText
                 send.setText(write.getText().toString());
+
                 //initilize RETROFIT
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(RetrofitClientInstance.API_URL)
@@ -83,6 +88,8 @@ public class Main2Activity extends AppCompatActivity {
                 call.enqueue(new Callback<sending>() {
                     @Override
                     public void onResponse(Call<sending> call, Response<sending> response) {
+
+                        //if some HTTP code response
                         if (!response.isSuccessful()) {
                             description.setText("Code: " + response.code());
                             return;
