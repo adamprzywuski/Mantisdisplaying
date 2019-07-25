@@ -3,9 +3,11 @@ package com.example.mantis_displaying;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,17 +15,26 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Main2Activity extends AppCompatActivity {
     datacollector ds=new datacollector();
     ArrayList<String> buffor = new ArrayList<String>();
     ArrayList<String> titles=new ArrayList<>();
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
+    ArrayList<Integer> ID=new ArrayList<>();
     TextView title,description;
+
     EditText write;
     int position;
-    Button btn,button;
+    ImageButton btn;
     ListView list2;
+    sending send=new sending();
 
     private void settingAdapter2(ArrayList<ArrayList<String>>k,ListView we,int position)
     {
@@ -42,18 +53,52 @@ public class Main2Activity extends AppCompatActivity {
         descprit=ob.descprit;
         position=ob.positions;
         comments=ob.comments;
+        ID=ob.ID;
         //initialize the layout variable
         Button clickButton = (Button) findViewById(R.id.back);
         title=findViewById(R.id.Title);
         description=findViewById(R.id.textView3);
         list2=findViewById(R.id.messages_view);
+        write=findViewById(R.id.editText);
+        btn=findViewById(R.id.button);
 
         //displaying the info in the specyfic places
         title.setText(titles.get(position));
-        //    title.setBackgroundColor(Integer.valueOf(color.get(position)));
-       // descprit.get(position).replace("\n"," ");
+
         description.setText(descprit.get(position));
         settingAdapter2(comments,list2,position);
 
+        btn.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                //Do stuff here
+                send.setText(write.getText().toString());
+                //initilize RETROFIT
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(RetrofitClientInstance.API_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                api api = retrofit.create(api.class);
+
+                Call<sending> call = api.sendNotes(ID.get(position),send);
+                call.enqueue(new Callback<sending>() {
+                    @Override
+                    public void onResponse(Call<sending> call, Response<sending> response) {
+                        if (!response.isSuccessful()) {
+                            description.setText("Code: " + response.code());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<sending> call, Throwable t) {
+                        description.setText(t.getMessage());
+                    }
+
+        });
+
+    }
+});
     }
 }
+
+

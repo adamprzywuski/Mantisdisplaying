@@ -7,5 +7,6 @@ public class datacollector {
     ArrayList<String> titles=new ArrayList<>();
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
+    ArrayList<Integer> ID=new ArrayList<>();
     int positions;
 }

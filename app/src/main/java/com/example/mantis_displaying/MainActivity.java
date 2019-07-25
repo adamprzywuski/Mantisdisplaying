@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
     ArrayList<String> color=new ArrayList<>();
-
+    ArrayList<Integer> ID=new ArrayList<>();
     private void settingAdapter(ArrayList<String> k,ListView we) {
         we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k));
     }
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ds.descprit=descprit;
         ds.titles=titles;
         ds.positions=posititions;
+        ds.ID=ID;
         String myJson=gson.toJson(ds);
         intent.putExtra("4",myJson);
 
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.listt);
         textt = findViewById(R.id.textView2);
         textt.setText("");
+
+        //initilize RETROFIT
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitClientInstance.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     storage += "Nazwa: " + project.summary + "\n";
                     storage += "Opis: " + project.description + "\n" + "\n";
                     buffor.add(storage);
+                    ID.add(project.id);
 
                     //date for the next layout
                     storage2+=project.project.name+"\n";

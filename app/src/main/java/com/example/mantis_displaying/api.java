@@ -4,6 +4,8 @@ package com.example.mantis_displaying;
 
 import retrofit2.Call;
 
+import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 
 import retrofit2.http.Headers;
@@ -24,8 +26,12 @@ public interface api {
    // Call<win> getAllIssues();
 
 
- //   @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
-  // @POST("/api/rest/issues/:issue_id/notes")
+    @Headers({"Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh",
+            "Content-Type: application/json"})
+   @POST("/api/rest/issues/{issue_id}/notes")
+    Call<sending>sendNotes(
+            @Path("issue_id") int id,
+                            @Body sending body);
 
 
 
