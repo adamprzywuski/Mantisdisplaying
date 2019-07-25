@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("4",myJson);
 
         startActivity(intent);
-        finish();
+
     }
 
 
