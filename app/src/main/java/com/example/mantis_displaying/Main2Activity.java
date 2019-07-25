@@ -36,11 +36,12 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Gson gson = new Gson();
-        datacollector ob = gson.fromJson(getIntent().getStringExtra("myjson"), datacollector.class);
+        datacollector ob = gson.fromJson(getIntent().getStringExtra("4"), datacollector.class);
         buffor=ob.buffor;
         titles=ob.titles;
         descprit=ob.descprit;
         position=ob.positions;
+        comments=ob.comments;
         //initialize the layout variable
         Button clickButton = (Button) findViewById(R.id.back);
         title=findViewById(R.id.Title);
