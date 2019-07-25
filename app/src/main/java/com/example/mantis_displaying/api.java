@@ -35,6 +35,14 @@ public interface api {
 
 
 
+    @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
+    @GET("/api/rest/issues/{issue_id}")
+    Call<Issues> getIssues(
+            @Path("issue_id") int id
+    );
+
+
+
 
 
 

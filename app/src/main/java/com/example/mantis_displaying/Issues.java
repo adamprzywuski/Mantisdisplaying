@@ -6,6 +6,9 @@ public class Issues {
 
     List<date> issues;
 
+    public Issues() {
+    }
+
     public Issues(List<date> issues) {
         this.issues = issues;
     }

@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,7 @@ public class Main2Activity extends AppCompatActivity {
         ArrayList<String> qwe= k.get(position);
         we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, qwe));
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +86,9 @@ public class Main2Activity extends AppCompatActivity {
                         .baseUrl(RetrofitClientInstance.API_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
-                api api = retrofit.create(api.class);
+                final api apiPost = retrofit.create(api.class);
 
-                Call<sending> call = api.sendNotes(ID.get(position),send);
+                Call<sending> call = apiPost.sendNotes(ID.get(position),send);
                 call.enqueue(new Callback<sending>() {
                     @Override
                     public void onResponse(Call<sending> call, Response<sending> response) {
@@ -94,6 +98,38 @@ public class Main2Activity extends AppCompatActivity {
                             description.setText("Code: " + response.code());
                             return;
                         }
+                            Call<Issues> callx=apiPost.getIssues(ID.get(position));
+                            callx.enqueue(new Callback<Issues>() {
+                                @Override
+                                public void onResponse(Call<Issues> call, Response<Issues> response) {
+                                    if (!response.isSuccessful()) {
+                                        description.setText("Code: " + response.code());
+                                        return;
+                                    }
+                                    Issues posts = response.body();
+
+                                    for (date project : posts.getIssues()) {
+                                        ArrayList<String>qwe=new ArrayList<String>();
+                                        for (comments note : project.getNotes()) {
+                                            String help = "";
+                                            help += note.reporter.name + "  " + note.created_at + "\n";
+                                            help += note.text + "\n";
+                                            qwe.add(help);
+                                        }
+                                        comments.set(position,qwe);
+                                    }
+                                settingAdapter2(comments,list2,position);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Issues> call, Throwable t) {
+
+                                }
+                            });
+
+
+
+
                     }
 
                     @Override

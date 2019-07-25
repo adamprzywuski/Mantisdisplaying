@@ -15,6 +15,9 @@ public class comments {
         this.created_at = created_at;
     }
 
+    public comments() {
+    }
+
     public int getId() {
         return id;
     }
