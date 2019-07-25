@@ -51,6 +51,7 @@ public class Main2Activity extends AppCompatActivity {
         //displaying the info in the specyfic places
         title.setText(titles.get(position));
         //    title.setBackgroundColor(Integer.valueOf(color.get(position)));
+       // descprit.get(position).replace("\n"," ");
         description.setText(descprit.get(position));
         settingAdapter2(comments,list2,position);
 

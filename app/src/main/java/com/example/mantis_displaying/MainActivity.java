@@ -108,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
                     storage2+=project.summary;
                     titles.add(storage2);
                     storage2="";
-                    storage2+=" Data: "+project.created_at+"\n";
-                    storage2+=" Twórca zgłoszenia: "+project.reporter.name+"\n";
-                    storage2+=" Opis: "+project.description+"\n";
+                    storage2+="Data: "+project.created_at+"\n";
+                    storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
+                    storage2+="Opis: "+project.description+"\n";
                     descprit.add(storage2);
                   //  color.add(project.new_values.getColor());
                     ArrayList<String>qwe=new ArrayList<String>();
