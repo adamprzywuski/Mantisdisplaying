@@ -80,7 +80,7 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 //Getting data from the EditText
                 send.setText(write.getText().toString());
-
+                write.setText("");
                 //initilize RETROFIT
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(RetrofitClientInstance.API_URL)
@@ -121,6 +121,7 @@ public class Main2Activity extends AppCompatActivity {
                                 settingAdapter2(comments,list2,position);
                                 }
 
+
                                 @Override
                                 public void onFailure(Call<Issues> call, Throwable t) {
 
@@ -136,6 +137,7 @@ public class Main2Activity extends AppCompatActivity {
                     public void onFailure(Call<sending> call, Throwable t) {
                         description.setText(t.getMessage());
                     }
+
 
         });
 
