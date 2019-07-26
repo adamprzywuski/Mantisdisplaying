@@ -91,6 +91,13 @@ public class Main2Activity extends AppCompatActivity {
 
                     send.setView_state(view);
                 }
+                else
+                {
+                    view_state view=new view_state("public");
+
+                    send.setView_state(view);
+                }
+
                 //initilize RETROFIT
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(RetrofitClientInstance.API_URL)
