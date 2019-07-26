@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 
 
 public interface api {
-
+//Interefence where are Http function
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
     @GET("/api/rest/issues?page_size=25&page=1")

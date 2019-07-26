@@ -1,7 +1,7 @@
 package com.example.mantis_displaying;
 
 public class sending {
-
+    //The class responsible for updating comments after adding a new one
     String text;
     view_state view_state;
 

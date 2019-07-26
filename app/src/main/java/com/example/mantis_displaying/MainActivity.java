@@ -43,12 +43,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> ID=new ArrayList<>();
 
 
-
+    //function for displaying the Listview
     private void settingAdapter(ArrayList<String> k, ListView we) {
+
         k.add("-------------------------------------------View more Issues-------------------------------------------");
         we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k));
     }
-
+//function to sending and changing activites
     private void newIntern(int position)
     {
         Gson gson=new Gson();
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+//function on start
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
                     storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
                     storage2+="Opis: "+project.description+"\n";
                     descprit.add(storage2);
-                  //  color.add(project.new_values.getColor());
+
+                    //itterations for getting comments to String
                     ArrayList<String>qwe=new ArrayList<String>();
                     if(project.getNotes()!=null) {
                         for (comments note : project.getNotes()) {
@@ -152,10 +154,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set an item click listener for ListView
+        //That's mean its allows to display more details
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //if user click the last button it should display more ISSUES
+                //***IN PROGRESS***
            if(buffor.size()-1==position)
            {
                buffor.clear();
@@ -202,17 +207,23 @@ public class MainActivity extends AppCompatActivity {
                            storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
                            storage2+="Opis: "+project.description+"\n";
                            descprit.add(storage2);
-                           //  color.add(project.new_values.getColor());
+
+
                            ArrayList<String>qwe=new ArrayList<String>();
                            if(project.getNotes()!=null) {
                                for (comments note : project.getNotes()) {
                                    String help = "";
                                    help += note.reporter.name + "  " + note.created_at + "\n";
+                                   if(note.view_state.name.equals("private"))
+                                   {
+                                       help+=note.view_state.getLabel() +"\n";
+                                   }
                                    help += note.text + "\n";
                                    qwe.add(help);
                                }
 
                            }
+                           //IF USER DOSENT CLICK THE LAST BUTTON
                            else
                            {
                                storage="No comments detected";

@@ -1,6 +1,8 @@
 package com.example.mantis_displaying;
 
 public class values {
+    //Its reposible for getting data about does comment is public or private
+    //But its not working yet
     int id;
     String name;
     String label;

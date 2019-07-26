@@ -2,8 +2,10 @@ package com.example.mantis_displaying;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +35,9 @@ public class Main2Activity extends AppCompatActivity {
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
+    ArrayAdapter<String> adapter;
     TextView title,description;
+
 //creating variebles for layout
     EditText write;
     int position;
@@ -45,7 +49,8 @@ public class Main2Activity extends AppCompatActivity {
     private void settingAdapter2(ArrayList<ArrayList<String>>k,ListView we,int position)
     {
         ArrayList<String> qwe= k.get(position);
-        we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, qwe));
+        adapter=new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, qwe);
+        we.setAdapter(adapter);
     }
 
 
@@ -127,15 +132,24 @@ public class Main2Activity extends AppCompatActivity {
 
                                     for (date project : posts.getIssues()) {
                                         ArrayList<String>qwe=new ArrayList<String>();
+                                        int i=-1;
                                         for (comments note : project.getNotes()) {
+                                            i++;
                                             String help = "";
                                             help += note.reporter.name + "  " + note.created_at + "\n";
+                                            if(note.view_state.name.equals("private"))
+                                            {
+                                               help+=note.view_state.getLabel()+"\n";
+                                            }
                                             help += note.text + "\n";
+
+
                                             qwe.add(help);
                                         }
                                         comments.set(position,qwe);
+                                        settingAdapter2(comments,list2,position);
                                     }
-                                settingAdapter2(comments,list2,position);
+
                                 }
 
 
@@ -160,7 +174,11 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 });
+
+
     }
+
+
 }
 
 

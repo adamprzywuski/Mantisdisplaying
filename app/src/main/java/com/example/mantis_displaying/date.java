@@ -2,6 +2,7 @@ package com.example.mantis_displaying;
 
 public class date
 {
+    //Its class with the most data.... ???
     int id;
     String summary;
     String description;

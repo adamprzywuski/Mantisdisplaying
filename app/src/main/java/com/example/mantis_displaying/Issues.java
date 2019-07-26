@@ -3,6 +3,7 @@ package com.example.mantis_displaying;
 import java.util.List;
 
 public class Issues {
+    //Its class of Array from data
 
     List<date> issues;
 
