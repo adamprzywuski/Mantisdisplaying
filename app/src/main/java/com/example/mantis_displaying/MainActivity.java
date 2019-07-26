@@ -41,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
     ArrayList<String> color=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
-    private void settingAdapter(ArrayList<String> k,ListView we) {
+
+
+
+    private void settingAdapter(ArrayList<String> k, ListView we) {
+        k.add("-------------------------------------------View more Issues-------------------------------------------");
         we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k));
     }
 
@@ -151,8 +155,86 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            posititions=position;
-            newIntern(position);
+
+           if(buffor.size()-1==position)
+           {
+               buffor.clear();
+               titles.clear();
+                descprit.clear();
+                comments.clear();
+                ID.clear();
+               Retrofit retrofit = new Retrofit.Builder()
+                       .baseUrl(RetrofitClientInstance.API_URL)
+                       .addConverterFactory(GsonConverterFactory.create())
+                       .build();
+               api api = retrofit.create(api.class);
+               Call<Issues> call = api.getDatas();
+               call.enqueue(new Callback<Issues>() {
+                   @Override
+                   public void onResponse(Call<Issues> call, Response<Issues> response) {
+
+                       if (!response.isSuccessful()) {
+                           textt.setText("Code: " + response.code());
+                           return;
+                       }
+
+                       //absorbing JSON as object my class
+                       Issues posts = response.body();
+                       //creating a cointener which will be displaying the data
+                       for (date project : posts.getIssues()) {
+
+                           //date for the first layout
+                           String storage = "";
+                           String storage2="";
+                           storage += "ID: " + Integer.toString(project.id) + "\n";
+                           storage+="Projekt:"+project.project.name+"\n";
+                           storage += "Nazwa: " + project.summary + "\n";
+                           storage += "Opis: " + project.description + "\n" + "\n";
+                           buffor.add(storage);
+                           ID.add(project.id);
+
+                           //date for the next layout
+                           storage2+=project.project.name+"\n";
+                           storage2+=project.summary;
+                           titles.add(storage2);
+                           storage2="";
+                           storage2+="Data: "+project.created_at+"\n";
+                           storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
+                           storage2+="Opis: "+project.description+"\n";
+                           descprit.add(storage2);
+                           //  color.add(project.new_values.getColor());
+                           ArrayList<String>qwe=new ArrayList<String>();
+                           if(project.getNotes()!=null) {
+                               for (comments note : project.getNotes()) {
+                                   String help = "";
+                                   help += note.reporter.name + "  " + note.created_at + "\n";
+                                   help += note.text + "\n";
+                                   qwe.add(help);
+                               }
+
+                           }
+                           else
+                           {
+                               storage="No comments detected";
+                               qwe.add(storage);
+                           }
+                           comments.add(qwe);
+                       }
+                       //using function which displaying the list with data which are in bufor
+                       settingAdapter(buffor,list);
+
+
+                   }
+
+                   @Override
+                   public void onFailure(Call<Issues> call, Throwable t) {
+                       textt.setText("Error" + t.getMessage());
+                   }
+               });
+           }
+           else
+           {            posititions=position;
+               newIntern(position);}
 
 
 

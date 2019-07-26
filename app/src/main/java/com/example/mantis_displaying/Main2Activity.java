@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,6 +39,7 @@ public class Main2Activity extends AppCompatActivity {
     int position;
     ImageButton btn;
     ListView list2;
+    CheckBox check;
     sending send=new sending();
 //function which put data into the ListView
     private void settingAdapter2(ArrayList<ArrayList<String>>k,ListView we,int position)
@@ -60,6 +62,7 @@ public class Main2Activity extends AppCompatActivity {
         descprit=ob.descprit;
         position=ob.positions;
         comments=ob.comments;
+
         ID=ob.ID;
 
         //initialize the layout variable
@@ -69,6 +72,7 @@ public class Main2Activity extends AppCompatActivity {
         list2=findViewById(R.id.messages_view);
         write=findViewById(R.id.editText);
         btn=findViewById(R.id.button);
+        check=findViewById(R.id.checkBox);
 
         //displaying the info in the specyfic places
         title.setText(titles.get(position));
@@ -81,6 +85,12 @@ public class Main2Activity extends AppCompatActivity {
                 //Getting data from the EditText
                 send.setText(write.getText().toString());
                 write.setText("");
+                if(check.isChecked())
+                {
+                    view_state view=new view_state("private");
+
+                    send.setView_state(view);
+                }
                 //initilize RETROFIT
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(RetrofitClientInstance.API_URL)
