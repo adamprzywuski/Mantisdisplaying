@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface api {
@@ -43,8 +44,8 @@ public interface api {
 
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
-    @GET("/api/rest/issues?page_size=30&page=1")
-    Call<Issues> getDatas();
+    @GET("/api/rest/issues?page=1")
+    Call<Issues> getDatas(@Query("page_size") int id);
 
 
 

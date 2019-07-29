@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //creating variables to layout
     ListView list;
     TextView textt;
-
+    int how_many=1;
     ImageButton update;
     private ArrayAdapter<String> adapter;
     int posititions;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api api = retrofit.create(api.class);
-
+        how_many++;
         Call<Issues> call = api.getData();
         call.enqueue(new Callback<Issues>() {
             @Override
@@ -187,11 +187,11 @@ public class MainActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
-                        Call<Issues> callx = apix.getDatas();
+                        Call<Issues> callx = apix.getDatas(10*how_many);
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
-
+                                    how_many++;
                                 if (!response.isSuccessful()) {
                                     textt.setText("Code: " + response.code());
                                     return;
