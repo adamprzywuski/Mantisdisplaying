@@ -17,7 +17,7 @@ public interface api {
 //Interefence where are Http function
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
-    @GET("/api/rest/issues?page_size=25&page=1")
+    @GET("/api/rest/issues?page_size=10&page=1")
     Call<Issues> getData();
 
 
@@ -43,7 +43,7 @@ public interface api {
 
 
     @Headers("Authorization:hV6kKJZA5VN-ZsfP2teVpxvw833bpLGh")
-    @GET("/api/rest/issues?page_size={30}&page=1")
+    @GET("/api/rest/issues?page_size=30&page=1")
     Call<Issues> getDatas();
 
 

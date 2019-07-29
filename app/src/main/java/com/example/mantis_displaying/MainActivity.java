@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //creating variables to layout
     ListView list;
     TextView textt;
-    Button btn;
+
     ImageButton update;
     private ArrayAdapter<String> adapter;
     int posititions;
@@ -37,21 +37,20 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> titles=new ArrayList<>();
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
- //   ArrayList<String> color=new ArrayList<>();
+    //   ArrayList<String> color=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
 
 
     //function for displaying the Listview
     private void settingAdapter(ArrayList<String> k, ListView we) {
 
-        k.add("-------------------------------------------View more Issues-------------------------------------------"+"\n");
-        adapter=new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k);
 
+        k.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
+        adapter = new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k);
         we.setAdapter(adapter);
-
-
-
     }
+
+
 
     //function to sending and changing activities
     private void newIntern(int positions)
@@ -73,17 +72,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//function on start
+    //function on start
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         //initiliaze variables to layout
         list = (ListView) findViewById(R.id.listt);
         textt = findViewById(R.id.textView2);
         textt.setText("");
-       // update.findViewById(R.id.updata);
+//        update.findViewById(R.id.updata);
 
 
         //initilize RETROFIT
@@ -140,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             help += note.text + "\n";
                             qwe.add(help);
-                            Gson gson = new Gson();
 
                         }
 
@@ -151,9 +151,11 @@ public class MainActivity extends AppCompatActivity {
                         qwe.add(storage);
                     }
                     comments.add(qwe);
+
                 }
                 //using function which displaying the list with data which are in bufor
                 settingAdapter(buffor,list);
+
 
 
             }
@@ -167,120 +169,119 @@ public class MainActivity extends AppCompatActivity {
 
         // Set an item click listener for ListView
         //That's mean its allows to display more details
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        try {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //if user click the last button it should display more ISSUES
-                //***IN PROGRESS***
-           if(buffor.size()-1==position)
-           {
-               buffor.clear();
-               titles.clear();
-                descprit.clear();
-                comments.clear();
-                ID.clear();
-               Retrofit retrofit = new Retrofit.Builder()
-                       .baseUrl(RetrofitClientInstance.API_URL)
-                       .addConverterFactory(GsonConverterFactory.create())
-                       .build();
-               api api = retrofit.create(api.class);
-               Call<Issues> call = api.getDatas();
-               call.enqueue(new Callback<Issues>() {
-                   @Override
-                   public void onResponse(Call<Issues> call, Response<Issues> response) {
+                    //if user click the last button it should display more ISSUES
+                    //***IN PROGRESS***
+                    if (buffor.size() - 1 == position) {
+                        buffor.clear();
+                        titles.clear();
+                        descprit.clear();
+                        comments.clear();
+                        ID.clear();
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(RetrofitClientInstance.API_URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        api apix = retrofit.create(api.class);
+                        Call<Issues> callx = apix.getDatas();
+                        callx.enqueue(new Callback<Issues>() {
+                            @Override
+                            public void onResponse(Call<Issues> call, Response<Issues> response) {
 
-                       if (!response.isSuccessful()) {
-                           textt.setText("Code: " + response.code());
-                           return;
-                       }
+                                if (!response.isSuccessful()) {
+                                    textt.setText("Code: " + response.code());
+                                    return;
+                                }
 
-                       //absorbing JSON as object my class
-                       Issues posts = response.body();
-                       //creating a cointener which will be displaying the data
-                       for (date project : posts.getIssues()) {
+                                //absorbing JSON as object my class
+                                Issues posts = response.body();
+                                //creating a cointener which will be displaying the data
+                                for (date project : posts.getIssues()) {
 
-                           //date for the first layout
-                           String storage = "";
-                           String storage2="";
-                           storage += "ID: " + Integer.toString(project.id) + "\n";
-                           storage+="Projekt:"+project.project.name+"\n";
-                           storage += "Nazwa: " + project.summary + "\n";
-                           storage += "Opis: " + project.description + "\n" + "\n";
-                           buffor.add(storage);
-                           ID.add(project.id);
+                                    //date for the first layout
+                                    String storage = "";
+                                    String storage2 = "";
+                                    storage += "ID: " + Integer.toString(project.id) + "\n";
+                                    storage += "Projekt:" + project.project.name + "\n";
+                                    storage += "Nazwa: " + project.summary + "\n";
+                                    storage += "Opis: " + project.description + "\n" + "\n";
+                                    buffor.add(storage);
+                                    ID.add(project.id);
 
-                           //date for the next layout
-                           storage2+=project.project.name+"\n";
-                           storage2+=project.summary;
-                           titles.add(storage2);
-                           storage2="";
-                           storage2+="Data: "+project.created_at+"\n";
-                           storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
-                           storage2+="Opis: "+project.description+"\n";
-                           descprit.add(storage2);
-
-
-                           ArrayList<String>qwe=new ArrayList<String>();
-                           if(project.getNotes()!=null) {
-                               for (comments note : project.getNotes()) {
-                                   String help = "";
-                                   help += note.reporter.name + "  " + note.created_at + "\n";
-
-                                   //Adding to comments if issue is private
-                                   if(!note.view_state.name.equals("public"))
-                                   {
-                                       help+="[private]"+"\n";
-                                   }
-                                   help += note.text + "\n";
-                                   qwe.add(help);
-                               }
-
-                           }
-                           //IF USER DOESN'T CLICK THE LAST BUTTON
-                           else
-                           {
-                               storage="No comments detected";
-                               qwe.add(storage);
-                           }
-                           comments.add(qwe);
-                       }
-                       //using function which displaying the list with data which are in bufor
-                       adapter.clear();
-                     //  adapter.notifyDataSetChanged();
-                       settingAdapter(buffor,list);
+                                    //date for the next layout
+                                    storage2 += project.project.name + "\n";
+                                    storage2 += project.summary;
+                                    titles.add(storage2);
+                                    storage2 = "";
+                                    storage2 += "Data: " + project.created_at + "\n";
+                                    storage2 += "Twórca zgłoszenia: " + project.reporter.name + "\n";
+                                    storage2 += "Opis: " + project.description + "\n";
+                                    descprit.add(storage2);
 
 
-                   }
+                                    ArrayList<String> qwe = new ArrayList<String>();
+                                    if (project.getNotes() != null) {
+                                        for (comments note : project.getNotes()) {
+                                            String help = "";
+                                            help += note.reporter.name + "  " + note.created_at + "\n";
 
-                   @Override
-                   public void onFailure(Call<Issues> call, Throwable t) {
-                       textt.setText("Error" + t.getMessage());
-                   }
-               });
-           }
-           else
-           {            posititions=position;
-               newIntern(position);}
+                                            //Adding to comments if issue is private
+                                            if (!note.view_state.name.equals("public")) {
+                                                help += "[private]" + "\n";
+                                            }
+                                            help += note.text + "\n";
+                                            qwe.add(help);
+                                        }
+
+                                    }
+                                    //IF USER DOESN'T CLICK THE LAST BUTTON
+                                    else {
+                                        storage = "No comments detected";
+                                        qwe.add(storage);
+                                    }
+                                    comments.add(qwe);
+                                }
+                                //using function which displaying the list with data which are in bufor
+
+                                //  settingAdapter(buffor,list);
+                                buffor.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
+                                adapter.notifyDataSetChanged();
 
 
+                            }
+
+                            @Override
+                            public void onFailure(Call<Issues> call, Throwable t) {
+                                textt.setText("Error" + t.getMessage());
+                            }
+                        });
+                    } else {
+                        posititions = position;
+                        newIntern(position);
+                    }
 
 
-
-
-
-            }
-        });
-/*     update.setOnClickListener(new Button.OnClickListener() {
+                }
+            });
+        }
+        catch(Exception e)
+        {
+            textt.setText(e.getMessage());
+        }
+/*   update.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-
+            textt.setText("DZIAAAAAAAAAAAAAAAAALLLLLLLLLAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAA");
 
 
             }
             });
 */
 
-        }
     }
+}
 
 

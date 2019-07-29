@@ -136,9 +136,9 @@ public class Main2Activity extends AppCompatActivity {
 
                                     for (date project : posts.getIssues()) {
                                         ArrayList<String>qwe=new ArrayList<String>();
-                                        int i=-1;
+
                                         for (comments note : project.getNotes()) {
-                                            i++;
+
                                             String help = "";
                                             help += note.reporter.name + "  " + note.created_at + "\n";
 
