@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -88,6 +89,9 @@ public class Main2Activity extends AppCompatActivity {
         btn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 //Getting data from the EditText
+
+                //When the user click the button it disappear the keyboard
+                write.setInputType(InputType.TYPE_NULL);
                 send.setText(write.getText().toString());
                 write.setText("");
                 if(check.isChecked())

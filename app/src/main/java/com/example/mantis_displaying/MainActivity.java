@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
                            comments.add(qwe);
                        }
                        //using function which displaying the list with data which are in bufor
-                       adapter.notifyDataSetChanged();
+                       adapter.clear();
+                     //  adapter.notifyDataSetChanged();
                        settingAdapter(buffor,list);
 
 
