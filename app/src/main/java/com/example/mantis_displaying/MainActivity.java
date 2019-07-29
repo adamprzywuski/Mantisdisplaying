@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.widget.ListView;
 import android.widget.*;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
     //   ArrayList<String> color=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
+
 
 
     //function for displaying the Listview
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
 
 
         //initiliaze variables to layout
@@ -86,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         textt.setText("");
 //        update.findViewById(R.id.updata);
 
+        View c = list.getChildAt(0);
 
         //initilize RETROFIT
         Retrofit retrofit = new Retrofit.Builder()
@@ -165,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
                 textt.setText("Error" + t.getMessage());
             }
         });
-
+/////TODO THERE WILL BE NEXT PART...
+        if(list.getFirstVisiblePosition()>=0.7*(size.y))
+        {
+            textt.setText("ILALALALALALALALLAFJIODJFIODFNFONRUIOF");
+        }
 
         // Set an item click listener for ListView
         //That's mean its allows to display more details
