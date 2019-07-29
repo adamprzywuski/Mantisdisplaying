@@ -29,10 +29,6 @@ public class sending {
         this.view_state = view_state;
     }
 
-    public String toString()
-    {
-        return "{ \"text\": \"test note\",\"view_state\": {\"name\": \"public\" } }";
-    }
 }
 
 

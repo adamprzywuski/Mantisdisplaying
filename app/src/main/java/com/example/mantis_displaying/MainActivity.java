@@ -27,30 +27,34 @@ import retrofit2.*;
 
 public class MainActivity extends AppCompatActivity {
     //creating variables to layout
-    ListView list,list2;
+    ListView list;
     TextView textt;
-    TextView title,description;
-    EditText write;
-    Button btn,button;
+    Button btn;
+    ImageButton update;
     private ArrayAdapter<String> adapter;
     int posititions;
-
     ArrayList<String> buffor = new ArrayList<String>();
     ArrayList<String> titles=new ArrayList<>();
     ArrayList<String> descprit=new ArrayList<>();
     ArrayList<ArrayList<String>> comments=new ArrayList<>();
-    ArrayList<String> color=new ArrayList<>();
+ //   ArrayList<String> color=new ArrayList<>();
     ArrayList<Integer> ID=new ArrayList<>();
 
 
     //function for displaying the Listview
     private void settingAdapter(ArrayList<String> k, ListView we) {
 
-        k.add("-------------------------------------------View more Issues-------------------------------------------");
-        we.setAdapter(new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k));
+        k.add("-------------------------------------------View more Issues-------------------------------------------"+"\n");
+        adapter=new ArrayAdapter<String>(this, R.layout.listexample, R.id.Row, k);
+
+        we.setAdapter(adapter);
+
+
+
     }
-//function to sending and changing activites
-    private void newIntern(int position)
+
+    //function to sending and changing activities
+    private void newIntern(int positions)
     {
         Gson gson=new Gson();
 
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.listt);
         textt = findViewById(R.id.textView2);
         textt.setText("");
+       // update.findViewById(R.id.updata);
+
 
         //initilize RETROFIT
         Retrofit retrofit = new Retrofit.Builder()
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //absorbing JSON as object my class
                 Issues posts = response.body();
-                //creating a cointener which will be displaying the data
+                //creating a container which will be displaying the data
                 for (date project : posts.getIssues()) {
 
                     //date for the first layout
@@ -121,15 +127,21 @@ public class MainActivity extends AppCompatActivity {
                     storage2+="Twórca zgłoszenia: "+project.reporter.name+"\n";
                     storage2+="Opis: "+project.description+"\n";
                     descprit.add(storage2);
-
-                    //itterations for getting comments to String
+                    //iteration for getting comments to String
                     ArrayList<String>qwe=new ArrayList<String>();
                     if(project.getNotes()!=null) {
                         for (comments note : project.getNotes()) {
                             String help = "";
                             help += note.reporter.name + "  " + note.created_at + "\n";
+                            //Adding to comments if issue is private
+                            if(!note.view_state.name.equals("public"))
+                            {
+                                help+="[private]"+"\n";
+                            }
                             help += note.text + "\n";
                             qwe.add(help);
+                            Gson gson = new Gson();
+
                         }
 
                     }
@@ -214,16 +226,18 @@ public class MainActivity extends AppCompatActivity {
                                for (comments note : project.getNotes()) {
                                    String help = "";
                                    help += note.reporter.name + "  " + note.created_at + "\n";
-                                   if(note.view_state.name.equals("private"))
+
+                                   //Adding to comments if issue is private
+                                   if(!note.view_state.name.equals("public"))
                                    {
-                                       help+=note.view_state.getLabel() +"\n";
+                                       help+="[private]"+"\n";
                                    }
                                    help += note.text + "\n";
                                    qwe.add(help);
                                }
 
                            }
-                           //IF USER DOSENT CLICK THE LAST BUTTON
+                           //IF USER DOESN'T CLICK THE LAST BUTTON
                            else
                            {
                                storage="No comments detected";
@@ -232,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                            comments.add(qwe);
                        }
                        //using function which displaying the list with data which are in bufor
+                       adapter.notifyDataSetChanged();
                        settingAdapter(buffor,list);
 
 
@@ -255,8 +270,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+/*     update.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
 
 
+
+            }
+            });
+*/
+
+        }
     }
 
-}
+

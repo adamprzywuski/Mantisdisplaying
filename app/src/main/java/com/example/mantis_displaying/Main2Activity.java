@@ -137,17 +137,20 @@ public class Main2Activity extends AppCompatActivity {
                                             i++;
                                             String help = "";
                                             help += note.reporter.name + "  " + note.created_at + "\n";
-                                            if(note.view_state.name.equals("private"))
+
+                                            //Adding to comments if issue is private
+                                            if(!note.view_state.name.equals("public"))
                                             {
-                                               help+=note.view_state.getLabel()+"\n";
+                                                help+="[private]"+"\n";
                                             }
                                             help += note.text + "\n";
 
-
                                             qwe.add(help);
-                                        }
+
+             }
                                         comments.set(position,qwe);
                                         settingAdapter2(comments,list2,position);
+
                                     }
 
                                 }
