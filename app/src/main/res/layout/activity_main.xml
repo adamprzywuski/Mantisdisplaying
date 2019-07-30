@@ -24,17 +24,21 @@ tools:context=".MainActivity" >
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#00FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/updata"
-        android:layout_width="72dp"
-        android:layout_height="71dp"
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        app:srcCompat="@android:drawable/arrow_down_float"
-        tools:srcCompat="@android:drawable/btn_star_big_on" />
+        android:background="#FFFF8D"
+        android:radius="110dp"
+        android:text="REFRESH"
+        android:textColor="#5E35B1" />
+
 
 </RelativeLayout>
