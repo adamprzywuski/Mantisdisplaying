@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 textt.setText("Error" + t.getMessage());
             }
         });
-/////TODO THERE WILL BE NEXT PART...
+//////TODO THERE WILL BE NEXT PART...
         if(list.getFirstVisiblePosition()>=0.7*(size.y))
         {
             textt.setText("ILALALALALALALALLAFJIODJFIODFNFONRUIOF");
@@ -282,14 +282,6 @@ public class MainActivity extends AppCompatActivity {
         {
             textt.setText(e.getMessage());
         }
-/*   update.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            textt.setText("DZIAAAAAAAAAAAAAAAAALLLLLLLLLAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAA");
-
-
-            }
-            });
-*/
 
     }
 }

@@ -2,11 +2,13 @@ package com.example.mantis_displaying;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,10 +90,14 @@ public class Main2Activity extends AppCompatActivity {
         //when button to accept messeges will be click
         btn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                //Getting data from the EditText
+
 
                 //When the user click the button it disappear the keyboard
-                write.setInputType(InputType.TYPE_NULL);
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(write.getWindowToken(), 0);
+
+
+                //Getting data from the EditText
                 send.setText(write.getText().toString());
                 write.setText("");
                 if(check.isChecked())
