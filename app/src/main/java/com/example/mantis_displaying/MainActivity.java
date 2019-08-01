@@ -181,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api api = retrofit.create(api.class);
-        how_many++;
+
+
         Call<Issues> call = api.getData();
         call.enqueue(new Callback<Issues>() {
             @Override
@@ -271,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
                                 how_many++;
+                                textt.setText(Integer.toString(how_many));
                                 if (!response.isSuccessful()) {
                                     textt.setText("Code: " + response.code());
                                     return;
@@ -363,11 +365,11 @@ public class MainActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
-                        Call<Issues> callx = apix.getDatas(10 * (how_many-1));
+                        Call<Issues> callx = apix.getDatas(10 * (how_many));
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
-                                how_many++;
+
                                 if (!response.isSuccessful()) {
                                     textt.setText("Code: " + response.code());
                                     return;
