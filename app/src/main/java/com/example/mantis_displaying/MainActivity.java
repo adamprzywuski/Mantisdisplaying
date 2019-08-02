@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api apix = retrofit.create(api.class);
-        Call<Issues> callx = apix.getDatas(10 * how_many);
+        Call<Issues> callx = apix.getDatas(10 );
         callx.enqueue(new Callback<Issues>() {
             @Override
             public void onResponse(Call<Issues> call, Response<Issues> response) {
@@ -267,22 +267,22 @@ public class MainActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
-                        Call<Issues> callx = apix.getDatas(10 * how_many);
+                        Call<Issues> callx = apix.getDatas(how_many);
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
                                 how_many++;
-                                textt.setText(Integer.toString(how_many));
+                                textt.setText(buffor.size());
                                 if (!response.isSuccessful()) {
                                     textt.setText("Code: " + response.code());
                                     return;
                                 }
-                                buffor.clear();
+                              /*  buffor.clear();
                                 titles.clear();
                                 descprit.clear();
                                 comments.clear();
                                 ID.clear();
-
+*/                              buffor.remove(buffor.size()-1);
                                 //absorbing JSON as object my class
                                 Issues posts = response.body();
                                 //creating a cointener which will be displaying the data
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                                     comments.add(qwe);
                                 }
                                 //using function which displaying the list with data which are in bufor
-
+                                textt.setText(buffor.size());
                                 //  settingAdapter(buffor,list);
                                 buffor.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
                                 adapter.notifyDataSetChanged();
@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
-                        Call<Issues> callx = apix.getDatas(10 * (how_many));
+                        Call<Issues> callx = apix.getDatas( (how_many));
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
@@ -375,12 +375,12 @@ public class MainActivity extends AppCompatActivity {
                                     return;
                                 }
                                 // updating_date();
-                                buffor.clear();
+                              /*  buffor.clear();
                                 titles.clear();
                                 descprit.clear();
                                 comments.clear();
                                 ID.clear();
-
+*/
                                 //absorbing JSON as object my class
                                 Issues posts = response.body();
                                 //creating a cointener which will be displaying the data
