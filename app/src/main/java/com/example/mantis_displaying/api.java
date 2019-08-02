@@ -17,13 +17,13 @@ import retrofit2.http.Query;
 public interface api {
 //Interefence where are Http function
 
-    @Headers("Authorization:Ff91bZn4rqsBsk8E7cuoTCmvxnWo_jFv")
+    @Headers("Authorization:{WRITE_YOURS_TOKEN}")
     @GET("/api/rest/issues?page_size=10&page=1")
     Call<Issues> getData();
 
 
 
-    @Headers({"Authorization:Ff91bZn4rqsBsk8E7cuoTCmvxnWo_jFv",
+    @Headers({"Authorization:{WRITE_YOURS_TOKEN}",
             "Content-Type: application/json"})
    @POST("/api/rest/issues/{issue_id}/notes")
     Call<sending>sendNotes(
@@ -32,14 +32,14 @@ public interface api {
 
 
 
-    @Headers("Authorization:Ff91bZn4rqsBsk8E7cuoTCmvxnWo_jFv")
+    @Headers("Authorization:{WRITE_YOURS_TOKEN}")
     @GET("/api/rest/issues/{issue_id}")
     Call<Issues> getIssues(
             @Path("issue_id") int id
     );
 
 
-    @Headers("Authorization:Ff91bZn4rqsBsk8E7cuoTCmvxnWo_jFv")
+    @Headers("Authorization:{WRITE_YOURS_TOKEN}")
     @GET("/api/rest/issues?page_size=10&page=1")
     Call<Issues> getDatas(@Query("page") int id);
 

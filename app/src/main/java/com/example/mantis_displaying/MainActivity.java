@@ -24,15 +24,15 @@ public class MainActivity extends AppCompatActivity {
     //creating variables to layout
     ListView list;
     TextView textt;
-    int how_many = 1;
+
     Button update;
+    int how_many = 1;
     private ArrayAdapter<String> adapter;
     int posititions;
     ArrayList<String> buffor = new ArrayList<String>();
     ArrayList<String> titles = new ArrayList<>();
     ArrayList<String> descprit = new ArrayList<>();
     ArrayList<ArrayList<String>> comments = new ArrayList<>();
-    //   ArrayList<String> color=new ArrayList<>();
     ArrayList<Integer> ID = new ArrayList<>();
     boolean refresh=false;
 
@@ -46,96 +46,9 @@ public class MainActivity extends AppCompatActivity {
         we.setAdapter(adapter);
     }
 
-    private void updating_date()
-    {
-        buffor.clear();
-        titles.clear();
-        descprit.clear();
-        comments.clear();
-        ID.clear();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RetrofitClientInstance.API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        api apix = retrofit.create(api.class);
-        Call<Issues> callx = apix.getDatas(10 );
-        callx.enqueue(new Callback<Issues>() {
-            @Override
-            public void onResponse(Call<Issues> call, Response<Issues> response) {
-                how_many++;
-                if (!response.isSuccessful()) {
-                    textt.setText("Code: " + response.code());
-                    return;
-                }
-
-                //absorbing JSON as object my class
-                Issues posts = response.body();
-                //creating a cointener which will be displaying the data
-                for (date project : posts.getIssues()) {
-
-                    //date for the first layout
-                    String storage = "";
-                    String storage2 = "";
-                    storage += "ID: " + Integer.toString(project.id) + "\n";
-                    storage += "Projekt:" + project.project.name + "\n";
-                    storage += "Nazwa: " + project.summary + "\n";
-                    storage += "Opis: " + project.description + "\n" + "\n";
-                    buffor.add(storage);
-                    ID.add(project.id);
-
-                    //date for the next layout
-                    storage2 += project.project.name + "\n";
-                    storage2 += project.summary;
-                    titles.add(storage2);
-                    storage2 = "";
-                    storage2 += "Data: " + project.created_at + "\n";
-                    storage2 += "Twórca zgłoszenia: " + project.reporter.name + "\n";
-                    storage2 += "Opis: " + project.description + "\n";
-                    descprit.add(storage2);
-
-
-                    ArrayList<String> qwe = new ArrayList<String>();
-                    if (project.getNotes() != null) {
-                        for (comments note : project.getNotes()) {
-                            String help = "";
-                            help += note.reporter.name + "  " + note.created_at + "\n";
-
-                            //Adding to comments if issue is private
-                            if (!note.view_state.name.equals("public")) {
-                                help += "[private]" + "\n";
-                            }
-                            help += note.text + "\n";
-                            qwe.add(help);
-                        }
-
-                    }
-                    //IF USER DOESN'T CLICK THE LAST BUTTON
-                    else {
-                        storage = "No comments detected";
-                        qwe.add(storage);
-                    }
-                    comments.add(qwe);
-                }
-                //using function which displaying the list with data which are in bufor
-
-                //  settingAdapter(buffor,list);
-                buffor.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
-                adapter.notifyDataSetChanged();
 
 
 
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Issues> call, Throwable t) {
-                textt.setText("Error" + t.getMessage());
-            }
-        });
-
-
-    }
 
 
     //function to sending and changing activities
@@ -259,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     //if user click the last button it should display more ISSUES
-                    //***IN PROGRESS***
+
                     if (buffor.size() - 1 == position) {
 
                         Retrofit retrofit = new Retrofit.Builder()
@@ -267,22 +180,19 @@ public class MainActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
+                        how_many++;
                         Call<Issues> callx = apix.getDatas(how_many);
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
-                                how_many++;
-                                textt.setText(buffor.size());
+
+
                                 if (!response.isSuccessful()) {
                                     textt.setText("Code: " + response.code());
                                     return;
                                 }
-                              /*  buffor.clear();
-                                titles.clear();
-                                descprit.clear();
-                                comments.clear();
-                                ID.clear();
-*/                              buffor.remove(buffor.size()-1);
+
+                                 buffor.remove(buffor.size()-1);
                                 //absorbing JSON as object my class
                                 Issues posts = response.body();
                                 //creating a cointener which will be displaying the data
@@ -332,8 +242,7 @@ public class MainActivity extends AppCompatActivity {
                                     comments.add(qwe);
                                 }
                                 //using function which displaying the list with data which are in bufor
-                                textt.setText(buffor.size());
-                                //  settingAdapter(buffor,list);
+
                                 buffor.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
                                 adapter.notifyDataSetChanged();
 
@@ -358,14 +267,18 @@ public class MainActivity extends AppCompatActivity {
             });
             update.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
-
+                        buffor.clear();
+                        titles.clear();
+                        descprit.clear();
+                        ID.clear();
+                        comments.clear();
 
                         Retrofit retrofit = new Retrofit.Builder()
                                 .baseUrl(RetrofitClientInstance.API_URL)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         api apix = retrofit.create(api.class);
-                        Call<Issues> callx = apix.getDatas( (how_many));
+                        Call<Issues> callx = apix.getDatas( how_many);
                         callx.enqueue(new Callback<Issues>() {
                             @Override
                             public void onResponse(Call<Issues> call, Response<Issues> response) {
@@ -374,13 +287,7 @@ public class MainActivity extends AppCompatActivity {
                                     textt.setText("Code: " + response.code());
                                     return;
                                 }
-                                // updating_date();
-                              /*  buffor.clear();
-                                titles.clear();
-                                descprit.clear();
-                                comments.clear();
-                                ID.clear();
-*/
+
                                 //absorbing JSON as object my class
                                 Issues posts = response.body();
                                 //creating a cointener which will be displaying the data
@@ -432,7 +339,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 //using function which displaying the list with data which are in bufor
 
-                                //  settingAdapter(buffor,list);
                                 buffor.add("-------------------------------------------View more Issues-------------------------------------------" + "\n");
                                 adapter.notifyDataSetChanged();
 
